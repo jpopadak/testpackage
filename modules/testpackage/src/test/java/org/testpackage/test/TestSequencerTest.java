@@ -35,7 +35,41 @@ public class TestSequencerTest {
         assertEquals("the request contains the right number of test methods", 2, request.getRunner().testCount());
         assertEquals("the request has the test methods in lexicographic order (1/2)", "testTrue1(org.testpackage.runnertest.simpletests.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(0).getDisplayName());
         assertEquals("the request has the test methods in lexicographic order (2/2)", "testTrue2(org.testpackage.runnertest.simpletests.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(1).getDisplayName());
+    }
 
+    @Test
+    public void testWildcardOfEndOfPackageContains() throws IOException {
+        Request request = new TestSequencer().sequenceTests("org.testpackage.runnertest.wildcards.include*");
+
+        assertEquals("the request contains the right number of test methods", 8, request.getRunner().testCount());
+        assertEquals("the request has the test methods in lexicographic order (1/8)", "testTrue1(org.testpackage.runnertest.wildcards.include1.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (2/8)", "testTrue2(org.testpackage.runnertest.wildcards.include1.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(1).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (3/8)", "testTrue1(org.testpackage.runnertest.wildcards.include1.includesub1.SimpleTest)", request.getRunner().getDescription().getChildren().get(1).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (4/8)", "testTrue2(org.testpackage.runnertest.wildcards.include1.includesub1.SimpleTest)", request.getRunner().getDescription().getChildren().get(1).getChildren().get(1).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (5/8)", "testTrue1(org.testpackage.runnertest.wildcards.include1.includesub2.SimpleTest)", request.getRunner().getDescription().getChildren().get(2).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (6/8)", "testTrue2(org.testpackage.runnertest.wildcards.include1.includesub2.SimpleTest)", request.getRunner().getDescription().getChildren().get(2).getChildren().get(1).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (7/8)", "testTrue1(org.testpackage.runnertest.wildcards.include2.SimpleTest)", request.getRunner().getDescription().getChildren().get(3).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (8/8)", "testTrue2(org.testpackage.runnertest.wildcards.include2.SimpleTest)", request.getRunner().getDescription().getChildren().get(3).getChildren().get(1).getDisplayName());
+    }
+
+    @Test
+    public void testPackageContains() throws IOException {
+        Request request = new TestSequencer().sequenceTests("org.testpackage.runnertest.wildcards");
+
+        assertEquals("the request contains the right number of test methods", 2, request.getRunner().testCount());
+        assertEquals("the request has the test methods in lexicographic order (1/2)", "testTrue1(org.testpackage.runnertest.wildcards.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (2/2)", "testTrue2(org.testpackage.runnertest.wildcards.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(1).getDisplayName());
+    }
+
+    @Test
+    public void testWildcardOfMiddleOfPackageContains() throws IOException {
+        Request request = new TestSequencer().sequenceTests("org.testpackage.runnertest.wildcards.*.includesub");
+
+        assertEquals("the request contains the right number of test methods", 4, request.getRunner().testCount());
+        assertEquals("the request has the test methods in lexicographic order (1/4)", "testTrue1(org.testpackage.runnertest.wildcards.include1.includesub1.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (2/4)", "testTrue2(org.testpackage.runnertest.wildcards.include1.includesub1.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(1).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (3/4)", "testTrue1(org.testpackage.runnertest.wildcards.include1.includesub2.SimpleTest)", request.getRunner().getDescription().getChildren().get(1).getChildren().get(0).getDisplayName());
+        assertEquals("the request has the test methods in lexicographic order (4/4)", "testTrue2(org.testpackage.runnertest.wildcards.include1.includesub2.SimpleTest)", request.getRunner().getDescription().getChildren().get(1).getChildren().get(1).getDisplayName());
     }
 
     @Test

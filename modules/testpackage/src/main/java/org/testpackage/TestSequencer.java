@@ -45,9 +45,18 @@ public class TestSequencer {
     public Request sequenceTests(Map<String, Integer> runsSinceLastFailures, String... testPackageNames) throws IOException {
         List<Class<?>> testClasses = Lists.newArrayList();
 
+        ClassPath classpath = ClassPath.from(TestPackage.class.getClassLoader());
+
         for (String testPackageName : testPackageNames) {
-            ClassPath classpath = ClassPath.from(TestPackage.class.getClassLoader());
-            for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClasses(testPackageName)) {
+            testPackageName = testPackageName.replace(".", "\\.");
+            testPackageName = testPackageName.replace("*", ".*");
+
+            for (ClassPath.ClassInfo classInfo : classpath.getTopLevelClasses()) {
+                String packageName = classInfo.getPackageName();
+                if (!packageName.matches(testPackageName)) {
+                    continue;
+                }
+
                 final Class<?> theClass = classInfo.load();
 
                 final int modifiers = theClass.getModifiers();
