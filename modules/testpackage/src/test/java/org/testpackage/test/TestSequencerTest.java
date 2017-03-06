@@ -63,7 +63,7 @@ public class TestSequencerTest {
 
     @Test
     public void testWildcardOfMiddleOfPackageContains() throws IOException {
-        Request request = new TestSequencer().sequenceTests("org.testpackage.runnertest.wildcards.*.includesub");
+        Request request = new TestSequencer().sequenceTests("org.testpackage.runnertest.wildcards.*.includesub*");
 
         assertEquals("the request contains the right number of test methods", 4, request.getRunner().testCount());
         assertEquals("the request has the test methods in lexicographic order (1/4)", "testTrue1(org.testpackage.runnertest.wildcards.include1.includesub1.SimpleTest)", request.getRunner().getDescription().getChildren().get(0).getChildren().get(0).getDisplayName());
